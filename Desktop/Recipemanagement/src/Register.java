@@ -1,6 +1,10 @@
 
 
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -194,8 +198,8 @@ public class Register extends javax.swing.JFrame {
             pst.setString(3, jPasswordField2.getText());
             pst.setString(4, jTextField_email.getText());
             pst.setString(5, jTextField_phonenumber.getText());
-          
             
+ 
         if(verifyfields())
         {
            if(!checkusername())
@@ -220,12 +224,12 @@ public class Register extends javax.swing.JFrame {
             con.close();
             }
         }
-        }
+          }
         catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, e);
         }
-        
+           
         
         
         
@@ -275,6 +279,32 @@ public class Register extends javax.swing.JFrame {
         else {return true;}
     }
     
+    public boolean checkinternet(){
+        Thread timer = new Thread(){
+            @Override
+            public void run(){
+                for(;;){
+                    Socket socket = new Socket();
+                    InetSocketAddress address = new InetSocketAddress("jdbc:mysql://localhost:3306/register",80);
+                    try
+                    {
+                        socket.connect(address);
+                    }
+                    catch(Exception e)
+                    {e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, e);}
+                    try
+                    {
+                        sleep(100);
+                    }
+                    catch(Exception e)
+                    {e.printStackTrace();}
+                }
+            }
+        };
+        timer.start();
+        return checkinternet();
+    }
     // to check if username alredy exist's
     public boolean checkusername(){
 
