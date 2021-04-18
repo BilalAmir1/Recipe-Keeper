@@ -27,7 +27,7 @@ public class breakfast_table extends javax.swing.JFrame {
         {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/register","root","");
-            String sql = "SELECT recipe_title, catagory FROM recipes WHERE catagory = 'Breakfast'";
+            String sql = "SELECT id,recipe_title, catagory FROM recipes WHERE catagory = 'Breakfast'";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs=pst.executeQuery(sql);
             jTable1.setModel(DbUtils.resultSetToTableModel(rs));
